@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Royal Play Demo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0713;color:white;font-family:Arial,sans-serif}
+header{padding:20px;background:#160d25;border-bottom:1px solid #48256c}
+.logo{color:#c89aff;font-weight:bold;font-size:24px}
+main{padding:20px;max-width:900px;margin:auto}
+.hero{padding:28px 20px;border-radius:16px;background:linear-gradient(120deg,#40146b,#160d25);border:1px solid #6934a0}
+h1{font-size:34px;margin:10px 0}
+p{color:#c8bfd6;line-height:1.6}
+nav{display:flex;gap:8px;overflow:auto;margin:20px 0}
+button{padding:11px 15px;border:1px solid #553177;border-radius:8px;background:#211332;color:white}
+button.active{background:#793bd0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#171020;border:1px solid #39244d;border-radius:12px;overflow:hidden}
+.art{height:120px;display:grid;place-items:center;font-size:48px;background:linear-gradient(135deg,#642ba0,#221333)}
+.card h3,.card p{margin:12px}
+.card button{margin:0 12px 14px}
+.note{font-size:12px;color:#aaa}
+</style>
+</head>
+<body>
+<header><div class="logo">♛ ROYAL PLAY</div><p>Virtual coins · Demo gaming</p></header>
+<main>
+<section class="hero">
+<p>WELCOME TO YOUR GAME LOBBY</p>
+<h1>Play Your Fortune.</h1>
+<p>Explore original mini-games in a mobile-friendly demo.</p>
+<button onclick="document.getElementById('games').scrollIntoView()">Explore Games ↓</button>
+</section>
+<nav id="categories"></nav>
+<h2 id="games">Featured Games</h2>
+<div class="grid" id="grid"></div>
+<p class="note">Demo only. Virtual coins have no cash value. No real deposits or withdrawals.</p>
+</main>
+<script>
+const games=[
+{name:"Fortune Tiger",icon:"🐯",cat:"Slots"},
+{name:"Dragon Treasure",icon:"🐉",cat:"Slots"},
+{name:"Lucky Fruits",icon:"🍉",cat:"Slots"},
+{name:"Sky Crash",icon:"🚀",cat:"Crash"},
+{name:"Golden Wheel",icon:"🎡",cat:"Arcade"},
+{name:"Royal Cards",icon:"🃏",cat:"Cards"}
+];
+let category="All Games";
+const cats=["All Games","Slots","Crash","Arcade","Cards"];
+const nav=document.getElementById("categories");
+const grid=document.getElementById("grid");
+function render(){
+nav.innerHTML="";
+cats.forEach(c=>{
+const b=document.createElement("button");
+b.textContent=c;
+b.className=c===category?"active":"";
+b.onclick=()=>{category=c;render()};
+nav.appendChild(b);
+});
+grid.innerHTML="";
+games.filter(g=>category==="All Games"||g.cat===category).forEach(g=>{
+const card=document.createElement("article");
+card.className="card";
+card.innerHTML=`<div class="art">${g.icon}</div><h3>${g.name}</h3><p>${g.cat} · Demo</p>`;
+const b=document.createElement("button");
+b.textContent="Play demo";
+b.onclick=()=>alert(g.name+" — Demo preview only!");
+card.appendChild(b);
+grid.appendChild(card);
+});
+}
+render();
+</script>
+</body>
+</html>
